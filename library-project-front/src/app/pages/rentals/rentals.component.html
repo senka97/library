@@ -1,0 +1,25 @@
+<app-header></app-header>
+
+<div class="container mt-5 ms-auto me-auto text-center">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Username</th>
+        <th scope="col">Book Title</th>
+        <th scope="col">Renting Date</th>
+        <th scope="col">Due Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rent of rentals" (click)="goToUserProfile(rent.renter.username)">  
+        <td class='item' >{{rent.renter.username}}</td> 
+        <td class='item'>{{rent.book.title}}</td> 
+        <td class='item'>{{rent.rentingDate | date}}</td> 
+        <td  class='item'>  
+          <span *ngIf="rent.daysRemaining > 0" class="badge rounded-pill bg-primary"> {{rent.daysRemaining}} Days Left </span> 
+          <span *ngIf="rent.daysRemaining < 0" class="badge rounded-pill bg-danger"> OVERDUE </span>     
+        </td> 
+       </tr> 
+    </tbody>
+  </table>
+</div>

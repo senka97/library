@@ -1,0 +1,29 @@
+<div class="card shadow-lg bg-body rounded me-auto ms-auto mt-5">
+  <div class="card-header bg-tarnsparent text-center"><h2> Log In </h2></div>
+  <div class="card-body">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group mt-3">
+        <label for="username" data-error = "Required field ">Username</label>
+        <input  type="text" formControlName="username" class="form-control needs-validation" id="username" name="username" aria-describedby="usernameHelp" placeholder="Enter username" required  >
+        <div *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)"  class="alert alert-danger">
+          <div *ngIf="loginForm.get('username')?.errors?.required!">
+          Username is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="password" data-error="Required field">Password</label>
+        <input type="password" formControlName="password" class="form-control" name = "password" id="password" placeholder="Enter password" required >   
+        <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"  class="alert alert-danger">
+          <div *ngIf="loginForm.get('password')?.errors?.required!">
+          Password is required.
+          </div>
+        </div>     
+      </div>
+      <div class="d-flex justify-content-end mt-3">
+        <button routerLink="/" type="button" class="btn btn-secondary me-3">Back</button>
+        <button [disabled]="loginForm.invalid" class="btn btn-primary md-5">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="card shadow-lg mb-3" (click)="goToBookDetails()">
+  <div class="card-header bg-tarnsparent text-dark text-center"><b> {{book.title}} </b></div>
+  <div class="row g-0">
+    <div class="col-md-6">
+      <img [src]="book.imageUrl">
+    </div>
+    <div class="col-md-6">
+      <div class="card-body">
+          {{book.subtitle}} <br/> <br/>
+          <b> {{book.authors.length === 1 ? "Author:" : "Authors:" }} </b> <br/>
+          <div *ngFor="let author of book.authors; let i = index">
+            {{author.firstName + " " + author.lastName}} <br/>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="user" class="card-footer bg-tarnsparent d-flex justify-content-end" >
+    <button *ngIf="isAdmin()" type="button" class="adminButton btn btn-outline-danger me-2" (click)="deleteBook($event)" > Delete </button>
+    <button *ngIf="isAdmin()" type="button" class="adminButton btn btn-outline-primary me-2" routerLink='book/edit/{{book.id}}' > Edit </button>
+    <button *ngIf="book.quantity > 0" type="button" class="btn btn-outline-dark" (click)="rentBook()" > Rent </button>
+    <button *ngIf="book.quantity === 0" class="btn btn-outline-secondary" disabled type="button">Not Available</button>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title " id="staticBackdropLabel"> {{title}} </h5>
+      </div>
+      <app-author-form *ngIf="modalType === 'author'" (createAuthorEvent)="addAuthor($event)"></app-author-form>
+      <app-user-form *ngIf="modalType === 'user'" [user]="user" [actionType]="action" [userForm]="userForm" (createUserEvent)="addUserEvent($event)" (editUserEvent)="updateUserEvent()" ></app-user-form>
+      <div class="modal-footer d-flex justify-content-start">
+        <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

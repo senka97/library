@@ -1,0 +1,13 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   <div class="container-fluid px-4">
+    <a class="navbar-brand" href="#">Library</a>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0"> </ul>
+
+      <li *ngIf="!user" class="nav-item"><a class="nav-link" routerLink="/login" >Login</a></li>
+
+      <app-dropdown-menu *ngIf="user" [label]="username" [dropdownItems]="dropdownItems"></app-dropdown-menu>
+      
+   </div>
+</nav>

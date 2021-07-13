@@ -1,0 +1,22 @@
+<app-header></app-header>
+<div *ngIf="user?.role === 'ROLE_ADMIN'" class="d-grid gap-2 d-md-flex justify-content-md-end mt-4 me-3" >
+  <button class="btn btn-secondary" type="button" routerLink="book/new">New Book</button>
+</div>
+<div class="container text-center">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4 ms-5">
+    <app-search (searchBooksEvent)="searchBooks($event)" class="me-5"></app-search>
+  </div>
+</div>
+
+<div class="alert alert-success mt-2 mb-2 mx-5 text-center" *ngIf="showAlert">
+  {{alertMessage}}
+</div>
+
+<div class="container-fluid mt-4" (window:scroll)="onScroll()">
+  <div class="row mt-2">
+    <div class="col" *ngFor="let book of books"> 
+      <app-book-card [book]="book" (deleteBookEvent)="deleteBook($event)"></app-book-card>
+    </div>
+  </div>
+</div>
+

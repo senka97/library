@@ -1,0 +1,23 @@
+/*#imageDiv {
+  width: 220px;
+  height: 250px;
+}*/
+
+img {
+  width: 14rem;
+  height: 15rem;
+}
+
+.card{
+  width: 28em;
+  cursor: pointer;
+  .adminButton{
+    display: none !important;
+  }
+}
+
+.card:hover{
+  .adminButton{
+    display: block !important;
+  }
+}

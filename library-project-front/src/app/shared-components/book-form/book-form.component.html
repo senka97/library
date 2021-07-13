@@ -1,0 +1,82 @@
+<app-header></app-header>
+<div class="card me-auto ms-auto mt-3 mb-3">
+  <div class="card-header bg-tarnsparent text-center"><h2> {{title}} </h2></div>
+  <form [formGroup]="newBookForm" *ngIf="newBookForm" (ngSubmit)="onSubmit()">
+    <div class="card-body">
+    <div class="row">
+      <div class="col-6" id="div-new-book">
+        <div class="form-group mt-2">
+          <label for="title">Title</label>
+          <input  type="text" formControlName="title" class="form-control" id="title" name="title" aria-describedby="titeHelp" placeholder="Book title is required" required  >
+        </div>
+        <div class="form-group mt-2">
+          <label for="description">Description</label>
+          <textarea formControlName="description" class="form-control" name = "description" id="description" placeholder="Book description is optional" rows="3" >  </textarea>      
+        </div>
+        <div class="form-group mt-2">
+          <label for="creationDate">creationDate</label>
+          <input type="date" formControlName="creationDate" class="form-control" name = "creationDate" id="creationDate"  required >        
+        </div>
+        <div class="form-group mt-2">
+          <label for="isbn">ISBN</label>
+          <input type="text" formControlName="isbn" class="form-control" name = "isbn" id="isbn" placeholder="Book ISBN is required" required >        
+        </div>
+        <div class="form-group mt-2">
+          <label for="quantity">Quantity</label>
+          <input type="number" formControlName="quantity" class="form-control" name = "quantity" id="quantity" placeholder="Qantity of books is required" min=0 required >        
+        </div>
+        <div class="form-group mt-2 mb-2">
+          <label for="author-select">Authors</label>
+          <button type="button" class="btn btn-sm btn-outline-secondary ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Create New Author</button>
+          <button class="accordion-button form-control collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#authors-list" aria-expanded="false" aria-controls="authors-list">
+            {{selectedAuthors.length ? selectedAuthors.length + ' selected' : 'Select authors'}}
+          </button>
+          <div id="authors-list" class="collapse mt-2 mb-5">
+            <input type="text" class="form-control" placeholder="Search" (keyup)="filterAuthors($event)">
+            <ul class="list-group author-list mb-2">
+              <li *ngFor="let author of filteredAuthors" class="list-group-item" [class]="isSelected(author) ? 'active' : ''" (click)="selectAuthor(author)">
+                {{getFullName(author)}}
+              </li>
+            </ul>      
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 mb-2">
+        <div class="image border mt-2">
+          <img  *ngIf="imageSrc" [src]="imageSrc" >
+        </div>
+        <div class="form-check">
+          <input value="1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (change)="radioButtonChanged($event);" checked>
+          <label class="form-check-label" for="flexRadioDefault1">
+            Upload image from computer
+          </label>
+        </div>
+        <div class="form-check">
+          <input value="2" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" (change)="radioButtonChanged($event);">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Upload image from web
+          </label>
+        </div>
+        
+        <div *ngIf="showUploadFromComputer" class="form-group">
+          <label for="imageFile">Book image</label>
+          <input type="file" formControlName="imageFile" class="form-control" (change)="onSelectFile($event)">
+        </div>
+        <div *ngIf="!showUploadFromComputer" class="form-group">
+          <label for="imageWeb">Book image</label>
+          <input type="text" formControlName="imageWeb" class="form-control" (change)="onChosenUrl($event)">
+        </div>
+      </div>
+      <div class="alert alert-success mt-2" *ngIf="showAlert">
+        {{alertMessage}}
+      </div>
+    </div>
+    <div class="card-footer bg-tarnsparent d-flex justify-content-end">
+      <button routerLink="/" type="button" class="btn btn-primary mt-2 mb-2 me-3">Back To Books</button>
+      <button [disabled]="!newBookForm.valid" class="btn btn-dark mt-2 mb-2 md-5">Submit</button>
+    </div>
+    </div>
+  </form>
+</div>
+<app-modal-dialog [modalType]="modalType" [title]="modalTitle" (createAuthorEvent)="addAuthor($event)"></app-modal-dialog>

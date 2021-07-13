@@ -1,0 +1,52 @@
+<app-header></app-header>
+<div class="card shadow-lg ms-auto me-auto mt-5 mb-5">
+  <div class="card-header bg-transparent text-center"><h2> {{user.username}} </h2></div>
+    <div class="row g-0">
+      <div class="image col-md-6">
+        <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" >
+      </div>
+
+      <div class="col-md-6">
+        <div class="card-body">
+          <div class="card-text mb-3"> <b> First Name: </b> {{ user.firstName}} </div>
+          <div class="card-text mb-3"> <b> Last Name: </b> {{ user.lastName }} </div>
+          <div class="card-text mb-3"> <b> Role: </b> {{ user.role === 'ROLE_USER'? 'USER': 'ADMIN' }} </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf = "username!==null" class="card-footer row g-0" >
+      <div class="col d-flex justify-content-start">
+        <button type="button" class="btn btn-secondary me-2" routerLink='/users'  > Back to Users </button>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <button *ngIf = "loggedInUser.username !== username" type="button" class="btn btn-danger me-2" (click)="deleteUser()" > Delete </button>
+        <button *ngIf = "loggedInUser.username !== username" type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editUser()" > Edit </button>
+      </div>
+    </div>
+  <app-modal-dialog [modalType]="modalType" [user]="user" [userForm]="userForm" [title]="modalTitle" (editUserEvent)="editUserEvent()"></app-modal-dialog>
+</div>
+
+  <div class="container mt-5 mb-5 ms-auto me-auto text-center">
+    <table class="table table-bordered shadow table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Book Title</th>
+          <th scope="col">Renting Date</th>
+          <th scope="col">Due date</th>
+          <th *ngIf = "loggedInUser.role === 'ROLE_ADMIN'" scope="col">Return</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rent of rentals" (click)="goToBookDetails(rent)">  
+          <td class='item'>{{rent.book.title}}</td> 
+          <td class='item'>{{rent.rentingDate | date}}</td> 
+          <td  class='item'>  
+            <span *ngIf="rent.daysRemaining > 0" class="badge rounded-pill bg-primary"> {{rent.daysRemaining}} days left </span> 
+            <span *ngIf="rent.daysRemaining < 0" class="badge rounded-pill bg-danger"> OVERDUE </span>     
+          </td> 
+          <td *ngIf = "loggedInUser.role === 'ROLE_ADMIN'"> <button type="button" class="btn btn-outline-primary me-2" (click)="returnBook(rent.id)" > Return </button></td>
+        </tr> 
+      </tbody>
+    </table>
+  </div>
+
